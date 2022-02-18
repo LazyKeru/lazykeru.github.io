@@ -1,0 +1,22 @@
+
+name: Deploy Website
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install npm
+        uses: actions/setup-node@v2
+        with:
+          cache: 'npm'
+          node-version: '14'
+      - name: deploy
+        run: |
+          npm install
+          cd ./portfolio
+          npm run deploy
