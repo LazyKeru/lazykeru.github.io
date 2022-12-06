@@ -1,4 +1,18 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import {createApp} from 'vue';
+import App from './App.vue';
+import 'primeflex/primeflex.css';
+import 'primeicons/primeicons.css';
+import PrimeVue from 'primevue/config';
+import Chip from 'primevue/chip';
 
-createApp(App).mount('#app')
+import 'primevue/resources/themes/bootstrap4-light-purple/theme.css';
+import 'primevue/resources/primevue.min.css';
+import 'primeicons/primeicons.css'
+
+const app = createApp(App);
+
+app.use(PrimeVue);
+
+app.component('p-chip', Chip);
+
+app.mount('#app');
