@@ -1,5 +1,5 @@
 <template>
-    <div v-for="(project, index) in projects" :key="index" class="m-4 md:m-8 ">
+    <div v-for="(project, index) in projects" :key="index" class="m-4 md:m-8">
       <a :href="project.link" class="no-underline">
         <Project 
             :title="project.title" 

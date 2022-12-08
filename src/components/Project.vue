@@ -19,7 +19,7 @@
                     {{description}}
                 </p>
             </div>
-            <div class="grid">
+            <div class="grid grid-nogutter">
                 <div v-for="(tag, index) in tags" :key="index" class="mr-3 mt-3">
                     <p-chip :label="tag.text" :icon="tag.icon"/>
                 </div>
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    name: "components-porject",
+    name: "component-project",
     props: {
         title: String,
         description: String,

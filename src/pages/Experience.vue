@@ -1,6 +1,12 @@
 <template>
-    <div v-for="(internship, index) in internships" :key="index" class="m-8">
-        <Professional :title="internship.title" :duration="internship.duration" :description="internship.description" :tags="internship.tags"/>
+    <div v-for="(internship, index) in internships" :key="index" class="m-4 md:m-8">
+        <Professional 
+          :title="internship.title" 
+          :duration="internship.duration" 
+          :description="internship.description" 
+          :tags="internship.tags"
+          class="p-5 bg-primary-reverse shadow-5 border-round-xl fadein animation-duration-1000 cursor-pointer transition-colors transition-duration-500 hover:bg-primary"
+        />
     </div>
 </template>
 
@@ -20,12 +26,16 @@ export default {
                   description: "Déploiement de différentes applications OpenSource dans un environnement k8s sur Azure : fournisseur OpenID Connect, solution de workflow NoOPS, et suite de recherche et d'analyse",
                   tags: [
                     {
-                      icon: "pi pi-sitemap",
+                      icon: "pi pi-box",
                       text: "K8s"
                     },
                     {
                       icon: "pi pi-cloud",
                       text: "Azure"
+                    },
+                    {
+                      icon: "pi pi-bolt",
+                      text: "DevOps"
                     }
                   ]
                 },
@@ -35,8 +45,28 @@ export default {
                   description: "Accompagnement d'un Audit de sécurité et préparation de la mise en place d'un WAF (pare-feu pour serveur Web). Mise en place d'un programme pour détecter les secrets codés en dur, et déploiement K8s",
                   tags: [
                     {
-                      icon: "",
-                      text: ""
+                      icon: "pi pi-box",
+                      text: "K8s"
+                    },
+                    {
+                      icon: "pi pi-bolt",
+                      text: "DevOps"
+                    },
+                    {
+                      icon: "pi pi-cloud-upload",
+                      text: "Datadog"
+                    },
+                    {
+                      icon: "pi pi-shield",
+                      text: "WAF"
+                    },
+                    {
+                      icon: "pi pi-search",
+                      text: "Regex"
+                    },
+                    {
+                      icon: "pi pi-search",
+                      text: "Enthropy"
                     }
                   ]
                 },
@@ -46,8 +76,24 @@ export default {
                   description: "Développement d'un tableau de bord sur les usage des espaces clients mobiles de l'opérateur en ReactNative, avec implémentation des méthodes CI/CD",
                   tags: [
                     {
-                      icon: "",
-                      text: ""
+                      icon: "pi pi-undo",
+                      text: "BitRise"
+                    },
+                    {
+                      icon: "pi pi-desktop",
+                      text: "React"
+                    },
+                    {
+                      icon: "pi pi-cog",
+                      text: "Apple"
+                    },
+                    {
+                      icon: "pi pi-cog",
+                      text: "Android"
+                    },
+                    {
+                      icon: "pi pi-google",
+                      text: "Firebase"
                     }
                   ]
                 },
@@ -57,8 +103,12 @@ export default {
                   description: "Réalisation de diverses missions en tant que réserviste au sein du 3ème régiment d'infanterie de marine. Encadrant lors de stages (ex: PMT). Dont le rôle de CDE et CDG pendant des exercices.",
                   tags: [
                     {
-                      icon: "",
-                      text: ""
+                      icon: "pi pi-users",
+                      text: "team"
+                    },
+                    {
+                      icon: "pi pi-calendar-times",
+                      text: "on time"
                     }
                   ]
                 }
