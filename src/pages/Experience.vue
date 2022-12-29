@@ -1,5 +1,9 @@
 <template>
-    <div v-for="(internship, index) in internships" :key="index" class="m-4 md:m-8">
+  <div v-if="internshipLoading">
+    Loading...
+  </div>
+  <div v-if="!intershipLoading">
+    <div v-for="(internship, index) in loadedInternships" :key="index" class="m-4 md:m-8">
         <Professional 
           :title="internship.title" 
           :duration="internship.duration" 
@@ -8,10 +12,12 @@
           class="p-5 bg-primary-reverse shadow-5 border-round-xl fadein animation-duration-1000 cursor-pointer transition-colors transition-duration-500 hover:bg-primary"
         />
     </div>
+  </div>
 </template>
 
 <script>
 import Professional from '@/components/Professional.vue';
+import singletonInstance from '@/service/database'
 export default {
     name: 'page-experience',
     components: {
@@ -19,101 +25,41 @@ export default {
     },
     data() {
         return {
-            internships : [
-                {
-                  title: "DevOps - Claranet",
-                  duration: "2022 (5 mois)",
-                  description: "Déploiement de différentes applications OpenSource dans un environnement k8s sur Azure : fournisseur OpenID Connect, solution de workflow NoOPS, et suite de recherche et d'analyse",
-                  tags: [
-                    {
-                      icon: "pi pi-box",
-                      text: "K8s"
-                    },
-                    {
-                      icon: "pi pi-cloud",
-                      text: "Azure"
-                    },
-                    {
-                      icon: "pi pi-bolt",
-                      text: "DevOps"
-                    }
-                  ]
-                },
-                {
-                  title: "DevSecOps - Colas ",
-                  duration: "2021 (4 mois)",
-                  description: "Accompagnement d'un Audit de sécurité et préparation de la mise en place d'un WAF (pare-feu pour serveur Web). Mise en place d'un programme pour détecter les secrets codés en dur, et déploiement K8s",
-                  tags: [
-                    {
-                      icon: "pi pi-box",
-                      text: "K8s"
-                    },
-                    {
-                      icon: "pi pi-bolt",
-                      text: "DevOps"
-                    },
-                    {
-                      icon: "pi pi-cloud-upload",
-                      text: "Datadog"
-                    },
-                    {
-                      icon: "pi pi-shield",
-                      text: "WAF"
-                    },
-                    {
-                      icon: "pi pi-search",
-                      text: "Regex"
-                    },
-                    {
-                      icon: "pi pi-search",
-                      text: "Enthropy"
-                    }
-                  ]
-                },
-                {
-                  title: "Développeur - Bouygues Telecom",
-                  duration: "2020 (4 mois)",
-                  description: "Développement d'un tableau de bord sur les usage des espaces clients mobiles de l'opérateur en ReactNative, avec implémentation des méthodes CI/CD",
-                  tags: [
-                    {
-                      icon: "pi pi-undo",
-                      text: "BitRise"
-                    },
-                    {
-                      icon: "pi pi-desktop",
-                      text: "React"
-                    },
-                    {
-                      icon: "pi pi-cog",
-                      text: "Apple"
-                    },
-                    {
-                      icon: "pi pi-cog",
-                      text: "Android"
-                    },
-                    {
-                      icon: "pi pi-google",
-                      text: "Firebase"
-                    }
-                  ]
-                },
-                {
-                  title: "Caporal - Réserviste de l’armée de Terre",
-                  duration: "2018-2023",
-                  description: "Réalisation de diverses missions en tant que réserviste au sein du 3ème régiment d'infanterie de marine. Encadrant lors de stages (ex: PMT). Dont le rôle de CDE et CDG pendant des exercices.",
-                  tags: [
-                    {
-                      icon: "pi pi-users",
-                      text: "team"
-                    },
-                    {
-                      icon: "pi pi-calendar-times",
-                      text: "on time"
-                    }
-                  ]
-                }
-            ]
+            internshipLoading: false,
+            loadedInternships: [],
+            lazyParamsInternship: {},
+            fetcherAPI: null
         }
+    },
+    created() {
+      this.fetcherAPI = singletonInstance
+    },
+    mounted() {
+      this.internshipLoading = true;
+      this.lazyParamsInternship = {
+        page: 0
+      }
+      this.lazyLoadInternships();
+    },
+    methods: {
+      lazyLoadInternships () {
+        this.loadedInternship = true;
+        setTimeout(() => {
+          this.fetcherAPI.getExperience()
+          .then(
+            data => {
+              this.loadedInternships = data;
+              this.internshipLoading = false;
+            }
+          )
+          .catch(
+            error => {
+              console.log(error)
+              this.internshipLoading = false;
+            }
+          )
+        }, 1000)
+      }
     },
 }
 </script>

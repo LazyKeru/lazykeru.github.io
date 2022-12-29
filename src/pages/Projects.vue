@@ -1,5 +1,9 @@
 <template>
-    <div v-for="(project, index) in projects" :key="index" class="m-4 md:m-8">
+  <div v-if="projectsLoading">
+    Loading...
+  </div>
+  <div v-if="!projectsLoading">
+    <div v-for="(project, index) in loadedProjects" :key="index" class="m-4 md:m-8">
       <a :href="project.link" class="no-underline">
         <Project 
             :title="project.title" 
@@ -11,71 +15,57 @@
         />
       </a>
     </div>
+  </div>
 </template>
 
 <script>
 import Project from '@/components/Project.vue';
+import singletonInstance from '@/service/database';
 
 export default {
     name: "page-projects",
-    data() {
-        return {
-            projects : [
-                {
-                    type: "",
-                    title: "SmellsFishy",
-                    description: "A Source Code Analysis Tool to detect hard coded secrets. Written in C++, it uses Entropy, Regex and in the future machine learning algorithm for detection. This is a project that was started in P6 as part of our studies at IMT Nord Europe",
-                    link: "https://github.com/LazyKeru/SmellsFishy",
-                    image: "https://raw.githubusercontent.com/LazyKeru/SmellsFishy/main/doc/img/logo.png",
-                    tags: [
-                    {
-                      icon: "pi pi-sitemap",
-                      text: "C++"
-                    },
-                    {
-                      icon: "pi pi-shield",
-                      text: "SAST"
-                    },
-                    {
-                      icon: "pi pi-filter",
-                      text: "Regex"
-                    },
-                    {
-                      icon: "pi pi-filter",
-                      text: "Enthropy"
-                    }
-                  ]
-                },
-                {
-                    type: "",
-                    title: "capa2021",
-                    description: "Site du CAPA (Comité d'Accueil des Premiers Arrivant) 2021 de l'IMT Nord Europe.",
-                    link: "https://github.com/AlexisAoun/capa2021",
-                    image: "https://raw.githubusercontent.com/AlexisAoun/capa2021/main/img/logo.png",
-                    tags: [
-                    {
-                      icon: "pi pi-globe",
-                      text: "Site Web"
-                    },
-                    {
-                      icon: "pi pi-pencil",
-                      text: "CSS"
-                    },
-                    {
-                      icon: "pi pi-align-justify",
-                      text: "html"
-                    },
-                    {
-                      icon: "pi pi-cog",
-                      text: "javascript"
-                    }
-                  ]
-                }
-            ]
-        }
-    },
     components: {
         Project
+    },
+    data() {
+        return {
+          projectsLoading: false,
+          loadedProjects: [],
+          lazyParamsProjects: {},
+          fetcherAPI: null
+        }
+    },
+    created () {
+      this.fetcherAPI = singletonInstance
+    },
+    mounted () {
+      this.projectsLoading = true
+      this.lazyParamsProjects = {
+        page: 0
+      }
+      this.lazyLoadProjects();
+    },
+    methods: {
+      lazyLoadProjects () {
+        this.projectsLoading = true
+        setTimeout(
+          () => {
+            this.fetcherAPI.getProjects()
+            .then(
+              data => {
+                this.loadedProjects = data
+                this.projectsLoading = false
+              }
+            )
+            .catch(
+              error => {
+                console.log(error)
+                this.projectsLoading = false
+              }
+            )
+          }
+        )
+      }
     }
 }
 </script>
