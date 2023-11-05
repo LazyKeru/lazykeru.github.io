@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router"
-import Main from "@/pages/Main"
-import Experience from "@/pages/Experience"
-import Projects from "@/pages/Projects"
+import Main from "@/pages/Main.vue"
+import Experience from "@/pages/Experience.vue"
+import Projects from "@/pages/Projects.vue"
 
 const routes = [
     {

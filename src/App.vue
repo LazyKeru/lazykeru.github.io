@@ -4,17 +4,18 @@
   <router-view></router-view>
 </template>
 
-<script>
-import Header from './components/Header.vue'
+<script lang="ts">
+import Header from '@/components/Header.vue';
 import Navbar from './pages/Navbar.vue';
+import { Options, Vue } from 'vue-class-component';
 
-export default {
-  name: 'App',
+@Options({
   components: {
     Header,
     Navbar
-  }
-}
+  },
+})
+export default class App extends Vue {}
 </script>
 
 <style>
