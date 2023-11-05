@@ -20,7 +20,7 @@ export default {
     },
     computed: {
       internships () {
-        return Backend.getProject()
+        return Backend.getExperiences()
       }
     }
 }

@@ -1,4 +1,5 @@
 import projectJson from "@/assets/data/projects.json"
+import experienceJson from "@/assets/data/experiences.json"
 
 interface IProject {
     type: string,
@@ -6,6 +7,13 @@ interface IProject {
     description: string,
     link: string,
     image: string,
+    tags: ITag[],
+}
+
+interface IExperience {
+    title: string,
+    duration: string,
+    description: string,
     tags: ITag[],
 }
 
@@ -28,9 +36,13 @@ class Backend {
 
     // private getProjectFromJson(): <>(json)
 
-    public getProject(): IProject [] {
+    public getProjects(): IProject [] {
        return projectJson.projects
     }
+
+    public getExperiences(): IExperience [] {
+        return experienceJson.internships
+     }
 }
 
 export default Backend.getInstance()
