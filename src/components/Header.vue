@@ -23,13 +23,18 @@
     </div>
 </template>
 
-<script>
-import Contact from './Contact';
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
+import Contact from '@/components/Contact.vue';
 
-export default {
+@Options({
     name: "my-header",
     components: {
         Contact
     }
+})
+
+export default class Header extends Vue {
+
 }
 </script>
