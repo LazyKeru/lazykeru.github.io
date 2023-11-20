@@ -1,4 +1,8 @@
 <template>
+  <div v-if="loading">
+    loading...
+  </div>
+  <div v-else>
     <div v-for="(project, index) in projects" :key="index" class="m-4 md:m-8">
       <a :href="project.link" class="no-underline">
         <Project 
@@ -11,21 +15,31 @@
         />
       </a>
     </div>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
 import Project from '@/components/Project.vue';
-import Backend from '@/service/backend.ts'
+import Backend from '@/service/backend'
+import { IProject } from '@/service/backend'
 
 export default {
     name: "page-projects",
-    computed: {
-      projects () {
-        return Backend.getProjects()
-      }
-    },
     components: {
         Project
+    },
+    data() {
+      return {
+        projects: [] as IProject[],
+        loading: true
+      }
+    },
+    mounted() {
+      this.loading = true
+      Backend.getProjects().then((response) => {
+        this.projects = response
+        this.loading = false
+      })
     }
 }
 </script>

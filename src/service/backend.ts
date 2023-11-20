@@ -2,7 +2,7 @@ import projectJson from "@/assets/data/projects.json"
 import experienceJson from "@/assets/data/experiences.json"
 import axios from "axios";
 
-const GOLANG_BACKEND_URL = 'https://backend.lazykeru.fr/api/v1/'
+const GOLANG_BACKEND_URL = 'https://lazykeru-backend.azurewebsites.net/api/v1/'
 
 interface IProject {
     type: string,
@@ -65,3 +65,5 @@ class Backend {
 }
 
 export default Backend.getInstance()
+
+export type { IProject, IExperience, ITag }

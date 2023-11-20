@@ -1,4 +1,8 @@
 <template>
+  <div v-if="loading">
+    loading...
+  </div>
+  <div v-else>
     <div v-for="(internship, index) in internships" :key="index" class="m-4 md:m-8">
         <Professional 
           :title="internship.title" 
@@ -8,20 +12,30 @@
           class="p-5 bg-primary-reverse shadow-5 border-round-xl fadein animation-duration-1000 cursor-pointer transition-colors transition-duration-500 hover:bg-primary"
         />
     </div>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
 import Professional from '@/components/Professional.vue';
-import Backend from '@/service/backend.ts'
+import Backend from '@/service/backend'
+import { IExperience } from '@/service/backend'
 export default {
     name: 'page-experience',
     components: {
         Professional
     },
-    computed: {
-      internships () {
-        return Backend.getExperiences()
+    data() {
+      return {
+        internships: [] as IExperience[],
+        loading: true
       }
+    },
+    mounted() {
+      this.loading = true
+      Backend.getExperiences().then((response) => {
+        this.internships = response
+        this.loading = false
+      })
     }
 }
 </script>
