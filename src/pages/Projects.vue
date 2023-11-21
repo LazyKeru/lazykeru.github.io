@@ -25,7 +25,6 @@ import Project from '@/components/Project.vue';
 import Backend from '@/service/backend'
 import { IProject } from '@/service/backend'
 
-
 export default defineComponent({
     name: "page-projects",
     components: {
