@@ -62,6 +62,16 @@ class Backend {
         .then((response) => response.data)
         .catch(() => experienceJson.internships);
     }
+
+    public async getContributions(): Promise<any> {
+        return axios
+        .get(
+            GOLANG_BACKEND_URL + 'contributions',
+            { headers: this.header() }
+        )
+        .then((response) => response.data)
+        .catch(() => console.error("Error"));
+    }
 }
 
 export default Backend.getInstance()
