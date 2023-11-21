@@ -25,6 +25,17 @@ interface ITag {
     text: string,
 }
 
+interface IContributionDay {
+    color: string,
+    contributionCount: number,
+    date: string,
+    weekday: number,
+}
+
+interface IContributionDays {
+    contributionDays: IContributionDay[],
+}
+
 class Backend {
     private static instance: Backend;
 
@@ -63,17 +74,19 @@ class Backend {
         .catch(() => experienceJson.internships);
     }
 
-    public async getContributions(): Promise<any> {
+    public async getContributions(): Promise<IContributionDays[]> {
         return axios
         .get(
-            GOLANG_BACKEND_URL + 'contributions',
+            GOLANG_BACKEND_URL + 'contribution',
             { headers: this.header() }
         )
-        .then((response) => response.data)
+        .then((response) => {
+            return response.data.data.viewer.contributionsCollection.contributionCalendar.weeks
+        })
         .catch(() => console.error("Error"));
     }
 }
 
 export default Backend.getInstance()
 
-export type { IProject, IExperience, ITag }
+export type { IProject, IExperience, ITag, IContributionDay, IContributionDays }
