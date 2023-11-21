@@ -1,6 +1,6 @@
 <template>
   <div v-if="loading">
-    loading...
+    <Loading/>
   </div>
   <div v-else>
     <div v-for="(internship, index) in internships" :key="index" class="m-4 md:m-8">
@@ -16,13 +16,17 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import Professional from '@/components/Professional.vue';
 import Backend from '@/service/backend'
+import Loading from '@/components/Loading.vue';
 import { IExperience } from '@/service/backend'
-export default {
+
+export default defineComponent({
     name: 'page-experience',
     components: {
-        Professional
+        Professional,
+        Loading
     },
     data() {
       return {
@@ -31,11 +35,10 @@ export default {
       }
     },
     mounted() {
-      this.loading = true
       Backend.getExperiences().then((response) => {
         this.internships = response
         this.loading = false
       })
     }
-}
+})
 </script>
