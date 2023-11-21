@@ -23,6 +23,7 @@ import Loading from '@/components/Loading.vue';
 import { IExperience } from '@/service/backend'
 
 export default defineComponent({
+
     name: 'page-experience',
     components: {
         Professional,
