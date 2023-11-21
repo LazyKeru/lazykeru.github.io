@@ -24,11 +24,17 @@
                 <p>Mention bien au baccalauréat avec spécialité mathématique, et les options sport et international. Participation à des compétitions en escalade et en natation.</p>
             </div>
         </div>
+        <github-contribution/>
     </div>
 </template>
 
 <script lang="ts">
+import GithubContribution from '@/components/GithubContribution.vue';
+
 export default {
-    name: 'page-main'
+    name: 'page-main',
+    components: {
+        "github-contribution": GithubContribution
+    }
 }
 </script>
