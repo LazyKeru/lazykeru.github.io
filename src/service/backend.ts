@@ -41,6 +41,7 @@ class Backend {
 
     private constructor() {}
 
+
     private header = () => ({
         'Content-Type': 'application/json',
     })
@@ -53,7 +54,7 @@ class Backend {
     }
 
     // private getProjectFromJson(): <>(json)
-
+  
     public async getProjects(): Promise<IProject[]> {
         return axios
         .get(
