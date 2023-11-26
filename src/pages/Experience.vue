@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <Search/>
+  </div>
   <div v-if="loading">
     <Loading/>
   </div>
@@ -20,12 +23,14 @@ import { defineComponent } from 'vue';
 import Professional from '@/components/Professional.vue';
 import Backend from '@/service/backend'
 import Loading from '@/components/Loading.vue';
+import Search from '@/components/Search.vue';
 import { IExperience } from '@/service/backend'
 
 export default defineComponent({
 
     name: 'page-experience',
     components: {
+        Search,
         Professional,
         Loading
     },

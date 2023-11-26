@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <Search class="p-5"/>
+  </div>
   <div v-if="loading">
     <Loading/>
   </div>
@@ -23,11 +26,13 @@ import { defineComponent } from 'vue';
 import Loading from '@/components/Loading.vue';
 import Project from '@/components/Project.vue';
 import Backend from '@/service/backend'
+import Search from '@/components/Search.vue';
 import { IProject } from '@/service/backend'
 
 export default defineComponent({
     name: "page-projects",
     components: {
+        Search,
         Project,
         Loading
     },
