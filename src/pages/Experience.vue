@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <Search/>
-  </div>
   <div v-if="loading">
     <Loading/>
   </div>
   <div v-else>
+    <Search 
+      class="p-5"
+      :tags="tags"
+    />
     <div v-for="(internship, index) in internships" :key="index" class="m-4 md:m-8">
         <Professional 
           :title="internship.title" 
@@ -24,7 +25,7 @@ import Professional from '@/components/Professional.vue';
 import Backend from '@/service/backend'
 import Loading from '@/components/Loading.vue';
 import Search from '@/components/Search.vue';
-import { IExperience } from '@/service/backend'
+import { IExperience, ITag } from '@/service/backend'
 
 export default defineComponent({
 
@@ -45,6 +46,13 @@ export default defineComponent({
         this.internships = response
         this.loading = false
       })
+    },
+    computed: {
+      tags(): ITag[] {
+        return this.internships.map((internship) => {
+          return internship.tags
+        }).flat()
+      }
     }
 })
 </script>

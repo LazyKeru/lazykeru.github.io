@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <Search class="p-5"/>
-  </div>
   <div v-if="loading">
     <Loading/>
   </div>
   <div v-else>
+    <Search
+      class="p-5"
+      :tags="tags"
+    />
     <div v-for="(project, index) in projects" :key="index" class="m-4 md:m-8">
       <a :href="project.link" class="no-underline">
         <Project 
@@ -27,7 +28,7 @@ import Loading from '@/components/Loading.vue';
 import Project from '@/components/Project.vue';
 import Backend from '@/service/backend'
 import Search from '@/components/Search.vue';
-import { IProject } from '@/service/backend'
+import { IProject, ITag } from '@/service/backend'
 
 export default defineComponent({
     name: "page-projects",
@@ -47,6 +48,13 @@ export default defineComponent({
         this.projects = response
         this.loading = false
       })
+    },
+    computed: {
+      tags(): ITag[] {
+        return this.projects.map((project) => {
+          return project.tags
+        }).flat()
+      }
     }
 })
 </script>
