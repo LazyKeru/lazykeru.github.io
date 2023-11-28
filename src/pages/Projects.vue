@@ -6,8 +6,9 @@
     <Search
       class="p-5"
       :tags="tags"
+      v-model:selectedTags="selectedTags"
     />
-    <div v-for="(project, index) in projects" :key="index" class="m-4 md:m-8">
+    <div v-for="(project, index) in filteredProjects" :key="index" class="m-4 md:m-8">
       <a :href="project.link" class="no-underline">
         <Project 
             :title="project.title" 
@@ -40,7 +41,8 @@ export default defineComponent({
     data() {
       return {
         projects: [] as IProject[],
-        loading: true
+        loading: true,
+        selectedTags: [] as ITag[]
       }
     },
     mounted() {
@@ -60,6 +62,18 @@ export default defineComponent({
             return index === self.findIndex(tag => tag.text === element.text)
           }
         )
+      },
+      filteredProjects(): IProject[] {
+        if (this.selectedTags.length === 0) {
+          return this.projects
+        }
+        return this.projects.filter((project) => {
+          return project.tags.some((tag) => {
+            return this.selectedTags.some((selectedTag) => {
+              return selectedTag.text === tag.text
+            })
+          })
+        })
       }
     }
 })

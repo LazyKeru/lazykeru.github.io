@@ -3,9 +3,10 @@
     <Loading/>
   </div>
   <div v-else>
-    <Search 
+    <Search
       class="p-5"
       :tags="tags"
+      v-model:selectedTags="selectedTags"
     />
     <div v-for="(internship, index) in internships" :key="index" class="m-4 md:m-8">
         <Professional 
@@ -38,7 +39,8 @@ export default defineComponent({
     data() {
       return {
         internships: [] as IExperience[],
-        loading: true
+        loading: true,
+        selectedTags: [] as ITag[]
       }
     },
     mounted() {
@@ -58,6 +60,18 @@ export default defineComponent({
             return index === self.findIndex(tag => tag.text === element.text)
           }
         )
+      },
+      filteredInternships(): IExperience[] {
+        if (this.selectedTags.length === 0) {
+          return this.internships
+        }
+        return this.internships.filter((internship) => {
+          return internship.tags.some((tag) => {
+            return this.selectedTags.some((selectedTag) => {
+              return selectedTag.text === tag.text
+            })
+          })
+        })
       }
     }
 })
