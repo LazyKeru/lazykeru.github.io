@@ -51,7 +51,13 @@ export default defineComponent({
       tags(): ITag[] {
         return this.internships.map((internship) => {
           return internship.tags
-        }).flat()
+        })
+        .flat()
+        .filter(
+          (element, index, self) => {
+            return index === self.findIndex(tag => tag.text === element.text)
+          }
+        )
       }
     }
 })

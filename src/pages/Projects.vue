@@ -53,7 +53,13 @@ export default defineComponent({
       tags(): ITag[] {
         return this.projects.map((project) => {
           return project.tags
-        }).flat()
+        })
+        .flat()
+        .filter(
+          (element, index, self) => {
+            return index === self.findIndex(tag => tag.text === element.text)
+          }
+        )
       }
     }
 })
