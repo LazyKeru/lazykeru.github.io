@@ -7,8 +7,9 @@
       class="p-5"
       :tags="tags"
       v-model:selectedTags="selectedTags"
+      v-model:searchArray="searchArray"
     />
-    <div v-for="(internship, index) in internships" :key="index" class="m-4 md:m-8">
+    <div v-for="(internship, index) in filteredInternships" :key="index" class="m-4 md:m-8">
         <Professional 
           :title="internship.title" 
           :duration="internship.duration" 
@@ -40,7 +41,8 @@ export default defineComponent({
       return {
         internships: [] as IExperience[],
         loading: true,
-        selectedTags: [] as ITag[]
+        selectedTags: [] as ITag[],
+        searchArray: ''
       }
     },
     mounted() {
@@ -48,6 +50,28 @@ export default defineComponent({
         this.internships = response
         this.loading = false
       })
+    },
+    methods: {
+      filteredInternshipsByArray(internships:IExperience[]): IExperience[] {
+        if (this.searchArray.length === 0) {
+          return internships
+        }
+        return internships.filter((internship) => {
+          return internship.title.toLowerCase().includes(this.searchArray.toLowerCase()) || internship.description.toLowerCase().includes(this.searchArray.toLowerCase())
+        })
+      },
+      filteredInternshipsByTags(internships:IExperience[]): IExperience[] {
+        if (this.selectedTags.length === 0) {
+          return internships
+        }
+        return internships.filter((internship) => {
+          return internship.tags.some((tag) => {
+            return this.selectedTags.some((selectedTag) => {
+              return selectedTag.text === tag.text
+            })
+          })
+        })
+      }
     },
     computed: {
       tags(): ITag[] {
@@ -62,16 +86,8 @@ export default defineComponent({
         )
       },
       filteredInternships(): IExperience[] {
-        if (this.selectedTags.length === 0) {
-          return this.internships
-        }
-        return this.internships.filter((internship) => {
-          return internship.tags.some((tag) => {
-            return this.selectedTags.some((selectedTag) => {
-              return selectedTag.text === tag.text
-            })
-          })
-        })
+        return this.filteredInternshipsByArray(this.filteredInternshipsByTags(this.internships))
+
       }
     }
 })

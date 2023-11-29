@@ -25,6 +25,7 @@
         </div>
         <div class="col-6">
             <InputText
+                v-model="searchArrayModel"
                 placeholder="Search"
                 class="w-full"
             />
@@ -52,6 +53,10 @@ export default defineComponent({
         selectedTags:{
             type: Array as () => ITag[],
             required: true
+        },
+        searchArray: {
+            type: String,
+            required: true
         }
     },
     computed: {
@@ -61,6 +66,14 @@ export default defineComponent({
             },
             set(value: ITag[]) {
                 this.$emit('update:selectedTags', value)
+            }
+        },
+        searchArrayModel: {
+            get(): string {
+                return this.searchArray
+            },
+            set(value: string) {
+                this.$emit('update:searchArray', value)
             }
         }
     }

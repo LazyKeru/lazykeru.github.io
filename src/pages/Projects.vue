@@ -7,6 +7,7 @@
       class="p-5"
       :tags="tags"
       v-model:selectedTags="selectedTags"
+      v-model:searchArray="searchArray"
     />
     <div v-for="(project, index) in filteredProjects" :key="index" class="m-4 md:m-8">
       <a :href="project.link" class="no-underline">
@@ -42,7 +43,8 @@ export default defineComponent({
       return {
         projects: [] as IProject[],
         loading: true,
-        selectedTags: [] as ITag[]
+        selectedTags: [] as ITag[],
+        searchArray: ''
       }
     },
     mounted() {
@@ -50,6 +52,28 @@ export default defineComponent({
         this.projects = response
         this.loading = false
       })
+    },
+    methods: {
+      filteredProjectsByTag(projects:IProject[]): IProject[] {
+        if (this.selectedTags.length === 0) {
+          return projects
+        }
+        return projects.filter((project) => {
+          return project.tags.some((tag) => {
+            return this.selectedTags.some((selectedTag) => {
+              return selectedTag.text === tag.text
+            })
+          })
+        })
+      },
+      filteredProjectsByArray(projects:IProject[]): IProject[] {
+        if (this.searchArray.length === 0) {
+          return projects
+        }
+        return projects.filter((project) => {
+          return project.title.toLowerCase().includes(this.searchArray.toLowerCase()) || project.description.toLowerCase().includes(this.searchArray.toLowerCase())
+        })
+      }
     },
     computed: {
       tags(): ITag[] {
@@ -64,16 +88,7 @@ export default defineComponent({
         )
       },
       filteredProjects(): IProject[] {
-        if (this.selectedTags.length === 0) {
-          return this.projects
-        }
-        return this.projects.filter((project) => {
-          return project.tags.some((tag) => {
-            return this.selectedTags.some((selectedTag) => {
-              return selectedTag.text === tag.text
-            })
-          })
-        })
+        return this.filteredProjectsByArray(this.filteredProjectsByTag(this.projects))
       }
     }
 })
