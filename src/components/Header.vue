@@ -13,10 +13,16 @@
                         Ingénieur DevOps
                     </p>
                 </div>
-                <div class="col-12 md:ml-6 ml-1">
-                    <Contact icon="pi pi-github" link="https://github.com/LazyKeru" information="LazyKeru" class="fadeinright animation-duration-300"/>
-                    <Contact icon="pi pi-linkedin" link="https://fr.linkedin.com/in/killian-allaire-672756154" information="Killian ALLAIRE"  class="fadeinright animation-duration-300 animation-delay-150"/>
-                    <Contact icon="pi pi-envelope" link="" information="killian.allaire@hotmail.com" class="fadeinright animation-duration-300 animation-delay-300"/>
+                <div class="col-12 md:my-6 my-1 mx-2 grid">
+                    <div class="md:col-12 col-4">
+                        <Contact icon="pi pi-github" link="https://github.com/LazyKeru" information="LazyKeru" class="fadeinright animation-duration-300"/>
+                    </div>
+                    <div class="md:col-12 col-4">
+                        <Contact icon="pi pi-linkedin" link="https://fr.linkedin.com/in/killian-allaire-672756154" information="Killian ALLAIRE"  class="fadeinright animation-duration-300 animation-delay-150"/>
+                    </div>
+                    <div class="md:col-12 col-4">
+                        <Contact icon="pi pi-envelope" link="" information="killian.allaire@hotmail.com" class="fadeinright animation-duration-300 animation-delay-300"/>
+                    </div>
                 </div>
             </div>
         </div>

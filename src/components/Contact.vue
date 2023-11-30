@@ -1,8 +1,8 @@
 <template>
     <a :href="link" class="no-underline">
-        <div class="contact-box flex flex-1 align-items-center align-content-center p-1 transition-colors transition-duration-500 border-2 border-round-2xl border-transparent hover:border-primary">
+        <div class="flex flex-1 align-items-center align-content-center p-1 transition-colors transition-duration-500 text-color hover:text-primary overflow-hidden text-overflow-ellipsis">
             <i :class="icon"/>
-            <p class="ml-2 m-0">
+            <p class="ml-2 m-0 ">
                 {{information}}
             </p> 
         </div>
